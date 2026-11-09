@@ -630,6 +630,9 @@ def kilavuz_sayfasi(wb):
     satirlar = [
         ("NASIL KULLANILIR?", "baslik"),
         ("", None),
+        ("Bu dosya Google E-Tablolar için hazırlanmıştır. Microsoft Excel'de açılırsa güncel fiyatlar GELMEZ", "uyari"),
+        ("(fiyat hücreleri boş görünür). Fiyatların otomatik gelmesi için aşağıdaki 1. adımı uygulayın.", "uyari"),
+        ("", None),
         ("1) GOOGLE E-TABLOLAR'A YÜKLEME (bir kere yapılır)", "alt"),
         ("• Bilgisayardan sheets.google.com adresine girin ve 'Boş e-tablo' açın.", None),
         ("• Menüden Dosya → İçe aktar → Yükle → bu dosyayı (hisse_takip.xlsx) seçin.", None),
@@ -673,6 +676,9 @@ def kilavuz_sayfasi(wb):
         elif tip == "alt":
             c.font = Font(bold=True, color="FFFFFF")
             c.fill = ORTA
+        elif tip == "uyari":
+            c.font = Font(bold=True, color="C00000")
+            c.fill = GIRIS
         c.alignment = Alignment(wrap_text=True, vertical="top")
 
 
@@ -689,6 +695,8 @@ def olustur(cikti):
     TC = temettu_sayfasi(wb)
     ozet_sayfasi(ozet, PB, PA, TB, TA, TC)
     kilavuz_sayfasi(wb)
+    wb.move_sheet("Nasıl Kullanılır", offset=-(len(wb.sheetnames) - 1))
+    wb.active = 0
 
     renkler = {"Özet": "1F3864", "BIST Portföy": "C00000", "BIST Alım-Satım": "E06666",
                "ABD Portföy": "2E75B6", "ABD Alım-Satım": "6FA8DC",
