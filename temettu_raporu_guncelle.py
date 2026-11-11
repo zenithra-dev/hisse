@@ -4,15 +4,16 @@ Temettü Raporu güncelleyici.
 Girdi : kaynak/temettu_raporu_orijinal.xlsx  (BIST ve ABD ilk 20 temettü raporu)
         temettu_fonlari.json                 (temettü dağıtan ABD fonları / ETF verisi)
         temettu_cin.json                     (Çin'in temettü veren en büyük 20 şirketi)
-Çıktı : temettu_raporu.xlsx
+Çıktı : temettu_raporu.xlsx      (BIST + ABD + ABD temettü fonları)
+        temettu_raporu_cin.xlsx  (Çin - ayrı dosya)
 
 Yaptığı değişiklikler:
 1. "Son 3/5/7/10 yıl kesintisiz" sütunları Evet/Hayır yerine SAYI gösterir:
    10 yılın 9'unda temettü ödediyse 9 yazar. Hepsinde ödediyse yeşil, eksik varsa pembe.
 2. Özet, "Batmama Riski" sayfası ve alt toplamlar yeni sayılara göre çalışır.
 3. "ABD Temettü Fonları" sayfası eklenir (aynı ✓/✗ ve sayı mantığıyla).
-4. "Çin İlk 20" sayfası eklenir (Hong Kong / ABD'de işlem gören Çin şirketleri);
-   Özet ve Batmama Riski sayfalarına Çin de dahil edilir.
+4. Çin için AYRI bir dosya üretilir: "Çin İlk 20" (Hong Kong / ABD'de işlem gören
+   Çin şirketleri), "Batmama Riski (3 yıl)" ve "Not Tablosu" sayfaları.
 
 Kullanım:  python3 temettu_raporu_guncelle.py
 """
@@ -29,6 +30,7 @@ GIRDI = KOK / "kaynak" / "temettu_raporu_orijinal.xlsx"
 FON_VERISI = KOK / "temettu_fonlari.json"
 CIN_VERISI = KOK / "temettu_cin.json"
 CIKTI = KOK / "temettu_raporu.xlsx"
+CIN_CIKTI = KOK / "temettu_raporu_cin.xlsx"
 
 ILK, SON = 5, 24  # şirket satırları
 YIL_SUTUN = "FGHIJKLMNO"  # 2017 .. 2026
@@ -102,8 +104,8 @@ def stil_kopyala(hedef, kaynak, alanlar=("font", "fill", "border", "alignment", 
         setattr(hedef, attr, copy(getattr(kaynak, attr)))
 
 
-def ozet_sayfasi(ws, fon_sayisi, cin_sayisi):
-    """Sütunlar: A etiket | BIST | ABD | (Çin) | Toplam (şirket) | (ABD temettü fonları)."""
+def ozet_sayfasi(ws, fon_sayisi):
+    """Sütunlar: A etiket | BIST | ABD | Toplam (şirket) | (ABD temettü fonları)."""
     veri_stili, toplam_stili, baslik_stili = {}, {}, {}
     for attr in ("font", "fill", "border", "alignment", "number_format"):
         veri_stili[attr] = copy(getattr(ws["C5"], attr))
@@ -112,8 +114,6 @@ def ozet_sayfasi(ws, fon_sayisi, cin_sayisi):
     baslik_stili["alignment"] = Alignment(horizontal="center", vertical="center", wrap_text=True)
 
     sayfalar = [("BIST (20 şirket)", "BIST İlk 20", 24), ("ABD (20 şirket)", "ABD İlk 20", 24)]
-    if cin_sayisi:
-        sayfalar.append((f"Çin ({cin_sayisi} şirket)", "Çin İlk 20", 4 + cin_sayisi))
     sirket_sutunlari = [chr(ord("B") + i) for i in range(len(sayfalar))]
     toplam_sutun = chr(ord("B") + len(sayfalar))
     fon_sutun = chr(ord(toplam_sutun) + 1)
@@ -145,76 +145,78 @@ def ozet_sayfasi(ws, fon_sayisi, cin_sayisi):
         ws.column_dimensions[col].width = 18
     ws.column_dimensions[fon_sutun].width = 20
 
-    piyasalar = "BIST İlk 20 / ABD İlk 20" + (" / Çin İlk 20" if cin_sayisi else "")
-    ws["A12"] = (f"• {piyasalar}: her yıl temettü ödendi mi (✓/✗), son 3-5-7-10 yılda "
+    ws["A12"] = ("• BIST İlk 20 / ABD İlk 20: her yıl temettü ödendi mi (✓/✗), son 3-5-7-10 yılda "
                  "kaç yıl ödendiği (ör. 10 yılda 9), verim, kredi notu, borçluluk.")
     if fon_sayisi:
         ws["A13"] = ("• ABD Temettü Fonları: temettü dağıtan en büyük 20 ABD borsa yatırım fonu (ETF); "
                      "aynı ✓/✗ ve sayı mantığı, gider oranı ve verim.")
-    sirket = 40 + cin_sayisi
-    ws["A14"] = (f"• Batmama Riski (3 yıl): {sirket} şirket için basit finansal sağlamlık "
+    ws["A14"] = ("• Batmama Riski (3 yıl): iki borsadaki 40 şirket için basit finansal sağlamlık "
                  "göstergesi.  • Not Tablosu: kredi notlarının kategori karşılıkları.")
     ws["A17"] = ("Yıl kolonlarındaki ✓/✗ hücreleri düzeltilirse tüm sayılar ve göstergeler "
                  "otomatik güncellenir.")
-    if cin_sayisi:
-        ws["A2"] = ("Borsa İstanbul, ABD ve Çin'de (Hong Kong / ABD'de işlem gören) son 3 yılda temettü "
-                    "veren en büyük 20'şer şirket; ayrıca temettü dağıtan ABD fonları")
-        ws["A21"] = (str(ws["A21"].value).replace(" (Kasım 2026).", "") +
-                     "; Çin verisi companiesmarketcap.com, stockanalysis.com ve HKEX belgelerinden "
-                     "(Kasım 2026).")
-        ws["A16"] = ("2024, 2025 ve 2026'nın her birinde nakit temettü ödemiş şirketler arasından piyasa "
-                     "değeri en büyük 20'şer şirket. Çin için yalnızca Türkiye'den alınabilen (Hong Kong "
-                     "veya ABD'de işlem gören) şirketler.")
 
 
-def batmama_sayfasi(ws, cin_sayisi=0):
+def gosterge_formulu(r):
+    return (f'=IF(AND(E{r}="Yatırım yapılabilir",F{r}=10),"Çok güçlü",'
+            f'IF(OR(E{r}="Yatırım yapılabilir",F{r}=10),"Güçlü",'
+            f'IF(G{r}=5,"Orta","Takip edilmeli")))')
+
+
+def batmama_sayfasi(ws):
     ws["F4"] = "Son 10 yılda\nkaç yıl temettü"
     ws["G4"] = "Son 5 yılda\nkaç yıl temettü"
-    son = 44 + cin_sayisi
-    if cin_sayisi:
-        # alttaki açıklama bloğunu (46-59) aşağı kaydır, Çin satırlarını ekle
-        ws.move_range("A46:J59", rows=cin_sayisi)
-        for i in range(cin_sayisi):
-            r, k = 45 + i, 5 + i
-            degerler = {
-                "A": "Çin",
-                "B": f"='Çin İlk 20'!B{k}",
-                "C": f"='Çin İlk 20'!C{k}",
-                "D": f"='Çin İlk 20'!X{k}",
-                "E": ws["E44"].value.replace("D44", f"D{r}"),
-                "F": f"='Çin İlk 20'!S{k}",
-                "G": f"='Çin İlk 20'!Q{k}",
-                "H": f"='Çin İlk 20'!Z{k}&\"\"",
-                "I": f"=IF('Çin İlk 20'!AA{k}=\"\",\"\",'Çin İlk 20'!AA{k})",
-            }
-            for col in "ABCDEFGHIJ":
-                c = ws[f"{col}{r}"]
-                if col in degerler:
-                    c.value = degerler[col]
-                stil_kopyala(c, ws[f"{col}44"])
-        for r in range(56 + cin_sayisi, 60 + cin_sayisi):
-            ws[f"C{r}"] = f"=COUNTIF(J5:J{son},A{r})"
-        c = ws[f"A{54 + cin_sayisi}"]
-        c.value = ("Çin: kredi notu 'Doğrulanamadı' yazan şirketler için güncel not kaynağı bulunamadı; "
-                   "burada 'Not yok' sayıldıkları için göstergeleri olduğundan düşük çıkmış olabilir.")
-        stil_kopyala(c, ws[f"A{53 + cin_sayisi}"])
-        ws.column_dimensions["B"].width = 10
-        ws.column_dimensions["D"].width = 15
-        eski = ws.conditional_formatting
-        yeni = type(eski)()
-        for aralik in eski:
-            for kural in aralik.rules:
-                yeni.add(f"J5:J{son}", kural)
-        ws.conditional_formatting = yeni
-    for r in range(5, son + 1):
+    for r in range(5, 45):
         ws[f"F{r}"].number_format = "0"
         ws[f"G{r}"].number_format = "0"
-        ws[f"J{r}"] = (f'=IF(AND(E{r}="Yatırım yapılabilir",F{r}=10),"Çok güçlü",'
-                       f'IF(OR(E{r}="Yatırım yapılabilir",F{r}=10),"Güçlü",'
-                       f'IF(G{r}=5,"Orta","Takip edilmeli")))')
-    ws[f"A{47 + cin_sayisi}"] = ("• Çok güçlü: yatırım yapılabilir kredi notu (BBB- / Baa3 ve üstü) VE "
-                                 "son 10 yılın 10'unda da temettü.")
-    ws[f"A{49 + cin_sayisi}"] = "• Orta: yalnızca son 5 yılın 5'inde de temettü."
+        ws[f"J{r}"] = gosterge_formulu(r)
+    ws["A47"] = ("• Çok güçlü: yatırım yapılabilir kredi notu (BBB- / Baa3 ve üstü) VE son 10 yılın "
+                 "10'unda da temettü.")
+    ws["A49"] = "• Orta: yalnızca son 5 yılın 5'inde de temettü."
+
+
+def cin_batmama_sayfasi(ws, n):
+    """Batmama sayfasını yalnızca Çin şirketlerini (n adet) gösterecek şekilde yeniden kurar.
+
+    Önce batmama_sayfasi() çalıştırılmış olmalı. Satır 5..4+n Çin'e bağlanır, kalan
+    şirket satırları silinir, alttaki açıklama bloğu (46-59) yukarı taşınır.
+    """
+    son = 4 + n
+    for i in range(n):
+        r = 5 + i
+        degerler = {
+            "A": "Çin",
+            "B": f"='Çin İlk 20'!B{r}",
+            "C": f"='Çin İlk 20'!C{r}",
+            "D": f"='Çin İlk 20'!X{r}",
+            "F": f"='Çin İlk 20'!S{r}",
+            "G": f"='Çin İlk 20'!Q{r}",
+            "H": f"='Çin İlk 20'!Z{r}&\"\"",
+            "I": f"=IF('Çin İlk 20'!AA{r}=\"\",\"\",'Çin İlk 20'!AA{r})",
+        }
+        for col, v in degerler.items():
+            ws[f"{col}{r}"] = v
+    for r in range(son + 1, 45):  # kullanılmayan şirket satırlarını tamamen kaldır
+        for col in range(1, 11):
+            ws._cells.pop((r, col), None)
+    kaydir = 44 - son
+    if kaydir:
+        ws.move_range("A46:J59", rows=-kaydir)
+    t = lambda r: r - kaydir  # eski satır -> yeni satır
+    ws[f"A{t(48)}"] = "• Güçlü: bu ikisinden yalnızca biri (ör. yüksek not ama temettü geçmişi kısa: Alibaba)."
+    ws[f"A{t(51)}"] = ("Kredi notu 'Doğrulanamadı' yazan şirketler için güncel not kaynağı bulunamadı; burada "
+                       "'Not yok' sayıldıkları için göstergeleri olduğundan düşük çıkmış olabilir.")
+    ws[f"A{t(52)}"] = ("Çin'de kurulu şirketlerin (H hissesi) temettüsünden %10 stopaj kesilir; ayrıntı "
+                       "'Çin İlk 20' sayfasının altındaki vergi notunda.")
+    for r in range(t(56), t(60)):
+        ws[f"C{r}"] = f"=COUNTIF(J5:J{son},A{r})"
+    eski = ws.conditional_formatting
+    yeni = type(eski)()
+    for aralik in eski:
+        for kural in aralik.rules:
+            yeni.add(f"J5:J{son}", kural)
+    ws.conditional_formatting = yeni
+    ws.column_dimensions["B"].width = 10
+    ws.column_dimensions["D"].width = 15
 
 
 # ---------------------------------------------------------------- Çin sayfası
@@ -232,7 +234,7 @@ CIN_GENISLIK = {"A": 5, "B": 10, "C": 28, "D": 20, "E": 12, "T": 12, "U": 12, "V
 
 def cin_sayfasi(wb, veri):
     sablon = wb["BIST İlk 20"]
-    ws = wb.create_sheet("Çin İlk 20", index=wb.sheetnames.index("ABD İlk 20") + 1)
+    ws = wb.create_sheet("Çin İlk 20", index=0)
     sirketler = veri["companies"]
     son = 4 + len(sirketler)
     stil = stil_kopyala
@@ -450,21 +452,43 @@ def fon_sayfasi(wb, veri):
     return len(fonlar)
 
 
-def main():
+def ana_rapor():
+    """BIST + ABD + ABD temettü fonları."""
     wb = openpyxl.load_workbook(GIRDI)
     sirket_sayfasi(wb["BIST İlk 20"])
     sirket_sayfasi(wb["ABD İlk 20"])
-    fon_sayisi = cin_sayisi = 0
+    fon_sayisi = 0
     if FON_VERISI.exists():
         veri = json.loads(FON_VERISI.read_text(encoding="utf-8"))
         fon_sayisi = fon_sayfasi(wb, veri)
-    if CIN_VERISI.exists():
-        veri = json.loads(CIN_VERISI.read_text(encoding="utf-8"))
-        cin_sayisi = cin_sayfasi(wb, veri)
-    ozet_sayfasi(wb["Özet"], fon_sayisi, cin_sayisi)
-    batmama_sayfasi(wb["Batmama Riski (3 yıl)"], cin_sayisi)
+    ozet_sayfasi(wb["Özet"], fon_sayisi)
+    batmama_sayfasi(wb["Batmama Riski (3 yıl)"])
     wb.save(CIKTI)
     print("Yazıldı:", CIKTI)
+
+
+def cin_raporu():
+    """Çin için ayrı dosya: Çin İlk 20 + Batmama Riski + Not Tablosu."""
+    if not CIN_VERISI.exists():
+        return
+    veri = json.loads(CIN_VERISI.read_text(encoding="utf-8"))
+    wb = openpyxl.load_workbook(GIRDI)  # biçim şablonu olarak
+    n = cin_sayfasi(wb, veri)
+    bat = wb["Batmama Riski (3 yıl)"]
+    batmama_sayfasi(bat)
+    cin_batmama_sayfasi(bat, n)
+    for ad in ("Özet", "BIST İlk 20", "ABD İlk 20"):
+        del wb[ad]
+    wb.active = 0
+    for ws in wb:
+        ws.sheet_view.tabSelected = ws.title == "Çin İlk 20"
+    wb.save(CIN_CIKTI)
+    print("Yazıldı:", CIN_CIKTI)
+
+
+def main():
+    ana_rapor()
+    cin_raporu()
 
 
 if __name__ == "__main__":
