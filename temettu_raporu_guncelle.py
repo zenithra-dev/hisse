@@ -4,6 +4,7 @@ Temettü Raporu güncelleyici.
 Girdi : kaynak/temettu_raporu_orijinal.xlsx  (BIST ve ABD ilk 20 temettü raporu)
         temettu_fonlari.json                 (temettü dağıtan ABD fonları / ETF verisi)
         temettu_cin.json                     (Çin'in temettü veren en büyük 20 şirketi)
+        temettu_cin_fonlari.json             (Çin temettü fonları / ETF)
 Çıktı : temettu_raporu.xlsx      (BIST + ABD + ABD temettü fonları)
         temettu_raporu_cin.xlsx  (Çin - ayrı dosya)
 
@@ -13,7 +14,7 @@ Yaptığı değişiklikler:
 2. Özet, "Batmama Riski" sayfası ve alt toplamlar yeni sayılara göre çalışır.
 3. "ABD Temettü Fonları" sayfası eklenir (aynı ✓/✗ ve sayı mantığıyla).
 4. Çin için AYRI bir dosya üretilir: "Çin İlk 20" (Hong Kong / ABD'de işlem gören
-   Çin şirketleri), "Batmama Riski (3 yıl)" ve "Not Tablosu" sayfaları.
+   Çin şirketleri), "Çin Temettü Fonları", "Batmama Riski (3 yıl)" ve "Not Tablosu".
 
 Kullanım:  python3 temettu_raporu_guncelle.py
 """
@@ -29,6 +30,7 @@ KOK = Path(__file__).resolve().parent
 GIRDI = KOK / "kaynak" / "temettu_raporu_orijinal.xlsx"
 FON_VERISI = KOK / "temettu_fonlari.json"
 CIN_VERISI = KOK / "temettu_cin.json"
+CIN_FON_VERISI = KOK / "temettu_cin_fonlari.json"
 CIKTI = KOK / "temettu_raporu.xlsx"
 CIN_CIKTI = KOK / "temettu_raporu_cin.xlsx"
 
@@ -413,6 +415,13 @@ def fon_sayfasi(wb, veri):
         ws[f"T{r}"] = geriye_kesintisiz(r)
         ws.row_dimensions[r].height = 40
 
+    fon_alt_kisim(ws, sablon, son, [veri.get("selection_note"), veri.get("turkey_note")], FON_GENISLIK)
+    return len(fonlar)
+
+
+def fon_alt_kisim(ws, sablon, son, notlar, genislikler):
+    """Fon sayfalarının ortak kısmı: renkler, alt toplam, açıklamalar, sütun genişlikleri."""
+    stil = stil_kopyala
     ws.conditional_formatting.add(
         f"F{ILK}:O{son}", FormulaRule(formula=["AND(ISNUMBER(F5),F5=1)"], fill=YESIL))
     ws.conditional_formatting.add(
@@ -430,7 +439,6 @@ def fon_sayfasi(wb, veri):
                          "Mavi yazı = elle girilen veri, siyah = formül.")
     stil(ws[f"C{alt + 1}"], sablon["C27"])
 
-    notlar = [veri.get("selection_note", ""), veri.get("turkey_note", "")]
     satir = alt + 3
     for metin in notlar:
         if not metin:
@@ -441,7 +449,7 @@ def fon_sayfasi(wb, veri):
         ws.row_dimensions[satir].height = 90
         satir += 1
 
-    for col, w in FON_GENISLIK.items():
+    for col, w in genislikler.items():
         ws.column_dimensions[col].width = w
     for col in YIL_SUTUN:
         ws.column_dimensions[col].width = 6
@@ -449,6 +457,86 @@ def fon_sayfasi(wb, veri):
         ws.column_dimensions[col].width = 11
     ws.freeze_panes = "D5"
     ws.sheet_view.zoomScale = sablon.sheet_view.zoomScale
+
+
+# ---------------------------------------------------------------- Çin fon sayfası
+CIN_FON_BASLIK = {
+    "A": "Sıra", "B": "Kod", "C": "Fon", "D": "Ne yapar (strateji)",
+    "E": "Fon büyüklüğü\n(milyon USD)",
+    "T": "Geriye doğru\nkesintisiz yıl\n(tabloda, max 10)",
+    "U": "İhraççı", "V": "Borsa", "W": "Kuruluş", "X": "Ödeme\nsıklığı",
+    "Y": "Son 12 ay\ntemettü / pay", "Z": "Para\nbirimi", "AA": "Temettü\nverimi",
+    "AB": "Yıllık gider\noranı", "AC": "Lot\n(en az adet)", "AD": "Not / Kaynak",
+}
+CIN_FON_GENISLIK = {"A": 5, "B": 10, "C": 34, "D": 34, "E": 12, "T": 12, "U": 16, "V": 10,
+                    "W": 11, "X": 10, "Y": 11, "Z": 8, "AA": 9, "AB": 10, "AC": 10, "AD": 60}
+
+
+def cin_fon_sayfasi(wb, veri):
+    sablon = wb["ABD İlk 20"]
+    ws = wb.create_sheet("Çin Temettü Fonları", index=wb.sheetnames.index("Çin İlk 20") + 1)
+    fonlar = veri["funds"]
+    son = 4 + len(fonlar)
+    stil = stil_kopyala
+
+    ws["A1"] = f"Çin — temettü dağıtan en büyük {len(fonlar)} borsa yatırım fonu (Hong Kong / ABD'de işlem görenler)"
+    stil(ws["A1"], sablon["A1"])
+    ws["A2"] = (f"Veri tarihi: {veri['as_of']}. Fon = içinde onlarca hisse olan sepet; tek şirkete göre "
+                "riski dağıtır. Seçim kriteri ve elenen fonlar tablonun altında.")
+    stil(ws["A2"], sablon["A2"])
+
+    for col, metin in CIN_FON_BASLIK.items():
+        ws[f"{col}4"] = metin
+    for i, col in enumerate(YIL_SUTUN):
+        ws[f"{col}4"] = 2017 + i
+    for sutun, n, _ in SAYAC:
+        ws[f"{sutun}4"] = baslik(n)
+    for col in list(CIN_FON_BASLIK) + list(YIL_SUTUN) + [x for x, _, _ in SAYAC]:
+        stil(ws[f"{col}4"], sablon["A4"])
+    ws.row_dimensions[4].height = 45
+
+    for i, f in enumerate(fonlar):
+        r = ILK + i
+        hk = str(f.get("exchange", "")).upper().startswith("HK")
+        degerler = {
+            "A": i + 1, "B": f"{f['code']}.HK" if hk else f["code"], "C": f["name"],
+            "D": f.get("strateji") or f.get("strategy"), "E": f.get("aum_mn_usd"),
+            "U": f.get("issuer"), "V": "Hong Kong" if hk else f.get("exchange"),
+            "W": tarih_tr(f.get("inception")),
+            "X": SIKLIK.get(str(f.get("frequency", "")).lower(), f.get("frequency")),
+            "Y": f.get("ttm_dps"), "Z": f.get("dps_currency"), "AA": f.get("yield"),
+            "AB": f.get("expense_ratio"), "AC": f.get("board_lot"),
+            "AD": " | ".join(x for x in [f.get("not") or f.get("note"),
+                                         "Kaynak: " + f["source_url"] if f.get("source_url") else None] if x),
+        }
+        for col, v in degerler.items():
+            ws[f"{col}{r}"] = v
+        for col, kaynak in {"A": "A", "B": "B", "C": "C", "D": "C", "E": "E", "T": "T", "U": "U",
+                            "V": "U", "W": "U", "X": "U", "Y": "W", "Z": "U", "AA": "X", "AB": "X",
+                            "AC": "U", "AD": "AC"}.items():
+            stil(ws[f"{col}{r}"], sablon[f"{kaynak}5"])
+        ws[f"E{r}"].number_format = "#,##0"
+        ws[f"Y{r}"].number_format = "#,##0.000"
+        ws[f"AA{r}"].number_format = "0.0%"
+        ws[f"AB{r}"].number_format = "0.00%"
+        ws[f"AC{r}"].number_format = "#,##0"
+        ws[f"AD{r}"].alignment = Alignment(horizontal="left", vertical="center", wrap_text=True)
+        for j, col in enumerate(YIL_SUTUN):
+            c = ws[f"{col}{r}"]
+            c.value = f["years"].get(str(2017 + j))
+            stil(c, sablon["F5"])
+            if c.value is None:
+                c.fill = copy(GRI)
+        for sutun, n, ilk_yil in SAYAC:
+            c = ws[f"{sutun}{r}"]
+            c.value = sayac_formulu(ilk_yil, r)
+            stil(c, sablon["P5"])
+            c.number_format = "0"
+        ws[f"T{r}"] = geriye_kesintisiz(r)
+        ws.row_dimensions[r].height = 40
+
+    fon_alt_kisim(ws, sablon, son, [veri.get("selection_note"), veri.get("broad_note")],
+                  CIN_FON_GENISLIK)
     return len(fonlar)
 
 
@@ -468,12 +556,14 @@ def ana_rapor():
 
 
 def cin_raporu():
-    """Çin için ayrı dosya: Çin İlk 20 + Batmama Riski + Not Tablosu."""
+    """Çin için ayrı dosya: Çin İlk 20 + Çin Temettü Fonları + Batmama Riski + Not Tablosu."""
     if not CIN_VERISI.exists():
         return
     veri = json.loads(CIN_VERISI.read_text(encoding="utf-8"))
     wb = openpyxl.load_workbook(GIRDI)  # biçim şablonu olarak
     n = cin_sayfasi(wb, veri)
+    if CIN_FON_VERISI.exists():
+        cin_fon_sayfasi(wb, json.loads(CIN_FON_VERISI.read_text(encoding="utf-8")))
     bat = wb["Batmama Riski (3 yıl)"]
     batmama_sayfasi(bat)
     cin_batmama_sayfasi(bat, n)
