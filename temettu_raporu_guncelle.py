@@ -155,10 +155,18 @@ FON_BASLIK = {
     "X": "Son 12 ay\ntemettü / pay\n(USD)", "Y": "Temettü\nverimi", "Z": "Yıllık gider\noranı",
     "AA": "Not / Kaynak",
 }
-FON_GENISLIK = {"A": 5, "B": 8, "C": 30, "D": 26, "E": 12, "T": 12, "U": 14, "V": 11,
+FON_GENISLIK = {"A": 5, "B": 8, "C": 30, "D": 32, "E": 12, "T": 12, "U": 14, "V": 11,
                 "W": 10, "X": 11, "Y": 9, "Z": 10, "AA": 60}
 SIKLIK = {"monthly": "Aylık", "quarterly": "3 ayda bir", "annual": "Yılda bir",
           "semiannual": "6 ayda bir", "semi-annual": "6 ayda bir"}
+
+
+def tarih_tr(iso):
+    """2011-10-20 -> 20.10.2011"""
+    if not iso or len(iso) != 10:
+        return iso
+    y, m, d = iso.split("-")
+    return f"{d}.{m}.{y}"
 
 
 def fon_sayfasi(wb, veri):
@@ -191,7 +199,7 @@ def fon_sayfasi(wb, veri):
         r = ILK + i
         degerler = {
             "A": i + 1, "B": f["ticker"], "C": f["name"], "D": f.get("strateji") or f.get("strategy"),
-            "E": f["aum_bn_usd"], "U": f["issuer"], "V": f.get("inception"),
+            "E": f["aum_bn_usd"], "U": f["issuer"], "V": tarih_tr(f.get("inception")),
             "W": SIKLIK.get(str(f.get("frequency", "")).lower(), f.get("frequency")),
             "X": f.get("ttm_dps_usd"), "Y": f.get("yield"), "Z": f.get("expense_ratio"),
             "AA": " | ".join(x for x in [f.get("not") or f.get("note"),
@@ -220,7 +228,7 @@ def fon_sayfasi(wb, veri):
             stil(c, sablon["P5"])
             c.number_format = "0"
         ws[f"T{r}"] = geriye_kesintisiz(r)
-        ws.row_dimensions[r].height = 30
+        ws.row_dimensions[r].height = 40
 
     ws.conditional_formatting.add(
         f"F{ILK}:O{son}", FormulaRule(formula=["AND(ISNUMBER(F5),F5=1)"], fill=YESIL))

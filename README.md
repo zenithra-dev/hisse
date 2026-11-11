@@ -40,3 +40,21 @@ pip install openpyxl
 python3 olustur.py            # hisse_takip.xlsx
 python3 olustur.py --test x.xlsx   # GOOGLEFINANCE yerine sabit sayılar (formül testi için)
 ```
+
+---
+
+# Temettü Raporu (BIST, ABD ve temettü fonları)
+
+**Dosya:** [`temettu_raporu.xlsx`](temettu_raporu.xlsx)
+
+| Sekme | Ne işe yarar |
+|---|---|
+| **Özet** | Son 3/5/7/10 yılın hepsinde temettü ödeyen şirket ve fon sayıları |
+| **BIST İlk 20 / ABD İlk 20** | Her yıl temettü ödendi mi (✓/✗) ve **son 3/5/7/10 yılda kaç yıl ödendiği** (ör. 10 yılda 9 → 9). Hepsinde ödediyse yeşil, eksik varsa pembe |
+| **ABD Temettü Fonları** | Temettü dağıtan en büyük 20 ABD borsa yatırım fonu (SCHD, VIG, VYM, JEPI…): aynı ✓/✗ ve sayı mantığı, büyüklük, verim, gider oranı, ödeme sıklığı |
+| **Batmama Riski (3 yıl)** | Kredi notu + temettü sürekliliğinden basit gösterge |
+| **Not Tablosu** | Kredi notu kategorileri |
+
+Yeniden üretmek için: `python3 temettu_raporu_guncelle.py`
+(girdi: `kaynak/temettu_raporu_orijinal.xlsx` + `temettu_fonlari.json`).
+Fon verisi 11.11.2026 tarihlidir (stockanalysis.com, Yahoo Finance). Bilgi amaçlıdır, yatırım tavsiyesi değildir.
