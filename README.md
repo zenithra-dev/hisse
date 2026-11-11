@@ -43,7 +43,7 @@ python3 olustur.py --test x.xlsx   # GOOGLEFINANCE yerine sabit sayılar (formü
 
 ---
 
-# Temettü Raporu (BIST, ABD ve temettü fonları)
+# Temettü Raporu (BIST, ABD, Çin ve temettü fonları)
 
 **Dosya:** [`temettu_raporu.xlsx`](temettu_raporu.xlsx)
 
@@ -51,10 +51,11 @@ python3 olustur.py --test x.xlsx   # GOOGLEFINANCE yerine sabit sayılar (formü
 |---|---|
 | **Özet** | Son 3/5/7/10 yılın hepsinde temettü ödeyen şirket ve fon sayıları |
 | **BIST İlk 20 / ABD İlk 20** | Her yıl temettü ödendi mi (✓/✗) ve **son 3/5/7/10 yılda kaç yıl ödendiği** (ör. 10 yılda 9 → 9). Hepsinde ödediyse yeşil, eksik varsa pembe |
+| **Çin İlk 20** | Hong Kong / ABD'de işlem gören (Türkiye'den alınabilen) en büyük 20 Çin şirketi: aynı ✓/✗ ve sayı mantığı, Hong Kong kodu, ABD (ADR) kodu, lot büyüklüğü, verim, kredi notu, stopaj notu |
 | **ABD Temettü Fonları** | Temettü dağıtan en büyük 20 ABD borsa yatırım fonu (SCHD, VIG, VYM, JEPI…): aynı ✓/✗ ve sayı mantığı, büyüklük, verim, gider oranı, ödeme sıklığı |
-| **Batmama Riski (3 yıl)** | Kredi notu + temettü sürekliliğinden basit gösterge |
+| **Batmama Riski (3 yıl)** | 60 şirket için kredi notu + temettü sürekliliğinden basit gösterge |
 | **Not Tablosu** | Kredi notu kategorileri |
 
 Yeniden üretmek için: `python3 temettu_raporu_guncelle.py`
-(girdi: `kaynak/temettu_raporu_orijinal.xlsx` + `temettu_fonlari.json`).
-Fon verisi 11.11.2026 tarihlidir (stockanalysis.com, Yahoo Finance). Bilgi amaçlıdır, yatırım tavsiyesi değildir.
+(girdi: `kaynak/temettu_raporu_orijinal.xlsx` + `temettu_fonlari.json` + `temettu_cin.json`).
+Fon ve Çin verisi 11.11.2026 tarihlidir (stockanalysis.com, companiesmarketcap.com, Yahoo Finance, HKEX). Bilgi amaçlıdır, yatırım tavsiyesi değildir.

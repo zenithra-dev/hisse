@@ -159,6 +159,9 @@ def ozet_sayfasi(ws, fon_sayisi, cin_sayisi):
     if cin_sayisi:
         ws["A2"] = ("Borsa İstanbul, ABD ve Çin'de (Hong Kong / ABD'de işlem gören) son 3 yılda temettü "
                     "veren en büyük 20'şer şirket; ayrıca temettü dağıtan ABD fonları")
+        ws["A21"] = (str(ws["A21"].value).replace(" (Kasım 2026).", "") +
+                     "; Çin verisi companiesmarketcap.com, stockanalysis.com ve HKEX belgelerinden "
+                     "(Kasım 2026).")
         ws["A16"] = ("2024, 2025 ve 2026'nın her birinde nakit temettü ödemiş şirketler arasından piyasa "
                      "değeri en büyük 20'şer şirket. Çin için yalnızca Türkiye'den alınabilen (Hong Kong "
                      "veya ABD'de işlem gören) şirketler.")
@@ -191,6 +194,12 @@ def batmama_sayfasi(ws, cin_sayisi=0):
                 stil_kopyala(c, ws[f"{col}44"])
         for r in range(56 + cin_sayisi, 60 + cin_sayisi):
             ws[f"C{r}"] = f"=COUNTIF(J5:J{son},A{r})"
+        c = ws[f"A{54 + cin_sayisi}"]
+        c.value = ("Çin: kredi notu 'Doğrulanamadı' yazan şirketler için güncel not kaynağı bulunamadı; "
+                   "burada 'Not yok' sayıldıkları için göstergeleri olduğundan düşük çıkmış olabilir.")
+        stil_kopyala(c, ws[f"A{53 + cin_sayisi}"])
+        ws.column_dimensions["B"].width = 10
+        ws.column_dimensions["D"].width = 15
         eski = ws.conditional_formatting
         yeni = type(eski)()
         for aralik in eski:
@@ -213,7 +222,7 @@ CIN_BASLIK = {
     "A": "Sıra", "B": "Kod\n(Hong Kong)", "C": "Şirket", "D": "Sektör",
     "E": "Piyasa Değeri\n(milyar USD)",
     "T": "Geriye doğru\nkesintisiz yıl\n(tabloda, max 10)",
-    "U": "2026'da hisse\nbaşı temettü", "V": "Para\nbirimi", "W": "Temettü\nverimi",
+    "U": "2026 hisse\nbaşı temettü\n(brüt)", "V": "Para\nbirimi", "W": "Temettü\nverimi",
     "X": "Kredi notu", "Y": "Not veren", "Z": "Borçluluk ölçüsü", "AA": "Değer",
     "AB": "ABD kodu\n(ADR)", "AC": "Lot\n(en az adet)", "AD": "Not / Kaynak",
 }
