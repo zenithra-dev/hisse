@@ -1,0 +1,378 @@
+{
+ "as_of": "2026-11-11 (fon büyüklüğü HKEX verisi, 7,846 HKD = 1 USD kuruyla; verim stockanalysis.com)",
+ "selection_note": "Seçim notu: Amacı temettü / yüksek temettü verimi / gelir olan (opsiyon satarak gelir dağıtanlar dahil), ağırlıklı olarak Çin şirketlerine yatırım yapan ve Hong Kong veya ABD borsasında işlem gören fonlar arandı. 2024, 2025 ve 2026'nın her birinde nakit dağıtım yapma koşulunu yalnızca bu 7 fon sağlıyor; Hong Kong'daki Çin temettü fonlarının çoğu 2025-2026'da kurulduğu için 3 yıllık geçmişi yok. Yeni olduğu için giremeyen büyük fonlar: 3466 Hang Seng High Dividend 30 (1.823 milyon $, Nisan 2025 - şu an en büyük saf temettü fonu), 2802 CSOP HSCEI Covered Call (1.090 milyon $, Aralık 2025), 3417 Global X Hang Seng TECH Covered Call (455 milyon $, Mart 2025). Çin fonu sayılmayanlar: 3145 (Asya-Pasifik geneli). Çin içi borsadaki büyük temettü fonları (ör. 512890, 510880) Türkiye'den alınamadığı için dışarıda bırakıldı. ABD'de Çin temettü fonu yok; yalnızca KLIP opsiyon gelir fonu koşula uyuyor. UYARI: 3416, 3419 ve KLIP'in %20-30 görünen verimi temettü değil opsiyon primidir ve büyük kısmı sermaye iadesidir; gerçek temettü fonları 3110, 3070, 3437 ve 3190'dır (verim %4,6-7,2). Verim = son 12 ay dağıtım / 11.11.2026 fiyatı. Son 12 ay = 11.11.2025-10.11.2026 arası hak düşüm tarihli dağıtımlar. 3437 ile 3190 büyüklükte neredeyse eşit; sıraları değişebilir.",
+ "broad_note": "Karşılaştırma için temettü odaklı OLMAYAN ama dağıtım yapan büyük Çin / Hong Kong fonları: 2800 Tracker Fund (Hang Seng endeksi; yaklaşık 17,5 milyar $, verim %3,1, 6 ayda bir, gider %0,06), MCHI iShares MSCI China (ABD; 5,85 milyar $, verim %2,2, 6 ayda bir, gider %0,59), FXI iShares China Large-Cap (ABD; 4,01 milyar $, verim %2,0, 6 ayda bir, gider %0,74), 2828 Hang Seng China Enterprises (yaklaşık 3,4 milyar $, verim %1,6, 6 ayda bir, gider %0,66), 2801 iShares Core MSCI China (yaklaşık 1,5 milyar $, verim %2,5, yılda bir).",
+ "funds": [
+  {
+   "code": "3416",
+   "exchange": "HKEX",
+   "name": "Global X HSCEI Covered Call Active ETF",
+   "issuer": "Global X (Mirae Asset)",
+   "aum_mn_usd": 2642.0,
+   "aum_date": "2026-11-10",
+   "inception": "2024-02-28",
+   "years": {
+    "2017": null,
+    "2018": null,
+    "2019": null,
+    "2020": null,
+    "2021": null,
+    "2022": null,
+    "2023": null,
+    "2024": 1,
+    "2025": 1,
+    "2026": 1
+   },
+   "frequency": "monthly",
+   "ttm_dps": 1.74,
+   "dps_currency": "HKD",
+   "yield": 0.2231,
+   "expense_ratio": 0.0075,
+   "board_lot": 100,
+   "source_url": "https://www.globalxetfs.com.hk/funds/hscei-covered-call-etf/",
+   "strateji": "Hong Kong'daki Çin şirketleri endeksi (HSCEI) hisseleri + endeks üzerine opsiyon satarak prim geliri",
+   "not": "DİKKAT: dağıttığı para şirket temettüsü değil opsiyon primi; ihraççı kayıtlarına göre 2024-2026 dağıtımlarının neredeyse tamamı 'sermayeden' (yatırılan paranın geri ödenmesi). Yükseliş kazancı sınırlı; fon fiyatı 10 HKD'den 7,87'ye düşmüş. Ayda 0,14-0,15 HKD. Şubat 2024'te kuruldu; 2017-2023 gri."
+  },
+  {
+   "code": "3110",
+   "exchange": "HKEX",
+   "name": "Global X Hang Seng High Dividend Yield ETF",
+   "issuer": "Global X (Mirae Asset)",
+   "aum_mn_usd": 788.0,
+   "aum_date": "2026-11-10",
+   "inception": "2013-06-11",
+   "years": {
+    "2017": 1,
+    "2018": 1,
+    "2019": 0,
+    "2020": 1,
+    "2021": 1,
+    "2022": 1,
+    "2023": 1,
+    "2024": 1,
+    "2025": 1,
+    "2026": 1
+   },
+   "frequency": "semiannual",
+   "ttm_dps": 1.98,
+   "dps_currency": "HKD",
+   "yield": 0.0665,
+   "expense_ratio": 0.0068,
+   "board_lot": 50,
+   "source_url": "https://www.globalxetfs.com.hk/funds/hang-seng-high-dividend-yield-etf/",
+   "strateji": "Hong Kong'da işlem gören en yüksek temettü verimli 50 hisse (yarıdan fazlası Çin kamu şirketi)",
+   "not": "Mart (küçük) ve Eylül (büyük) öder: 2026'da 0,28 + 1,70 HKD. 2019 ✗: ihraççı kaydı, etnet ve Yahoo'ya göre Eylül 2018 - Mart 2020 arası dağıtım yok (HKEX bildirimlerinden teyit edilmedi). 2025-2026 dağıtımları tamamen gelirden; 2022-2024'te kısmen/tamamen sermayeden. Endekste bazı Hong Kong yerel gayrimenkul/altyapı şirketleri de var."
+  },
+  {
+   "code": "3070",
+   "exchange": "HKEX",
+   "name": "Ping An of China CSI HK Dividend ETF",
+   "issuer": "Ping An",
+   "aum_mn_usd": 597.2,
+   "aum_date": "2026-11-11",
+   "inception": "2012-02-10",
+   "years": {
+    "2017": 1,
+    "2018": 1,
+    "2019": 1,
+    "2020": 1,
+    "2021": 1,
+    "2022": 1,
+    "2023": 1,
+    "2024": 1,
+    "2025": 1,
+    "2026": 1
+   },
+   "frequency": "quarterly",
+   "ttm_dps": 1.97,
+   "dps_currency": "HKD",
+   "yield": 0.0463,
+   "expense_ratio": 0.0071,
+   "board_lot": 100,
+   "source_url": "https://asset.pingan.com.hk/en/PACT-PACCHKD",
+   "strateji": "Hong Kong'daki yüksek ve istikrarlı temettülü 30 hisse (%92'si Çin şirketi; banka ve enerji ağırlıklı)",
+   "not": "Kural olarak sermayeden dağıtım yapmaz. Eylül 2025'ten beri 3 ayda bir (önce 6 ayda bir); tutarlar düzensiz (0,47 / 0,13 / 0,34 / 1,03 HKD). UYARI: büyüklük HKEX'e göre 4.686 milyon HKD, ama ihraççının 30.09.2026 bülteninde 1.377 milyon HKD; altı haftada üçe katlanmış görünüyor, sırası değişebilir."
+  },
+  {
+   "code": "3419",
+   "exchange": "HKEX",
+   "name": "Global X HSI Covered Call Active ETF",
+   "issuer": "Global X (Mirae Asset)",
+   "aum_mn_usd": 416.6,
+   "aum_date": "2026-11-10",
+   "inception": "2024-02-28",
+   "years": {
+    "2017": null,
+    "2018": null,
+    "2019": null,
+    "2020": null,
+    "2021": null,
+    "2022": null,
+    "2023": null,
+    "2024": 1,
+    "2025": 1,
+    "2026": 1
+   },
+   "frequency": "monthly",
+   "ttm_dps": 1.87,
+   "dps_currency": "HKD",
+   "yield": 0.2135,
+   "expense_ratio": 0.0075,
+   "board_lot": 100,
+   "source_url": "https://www.globalxetfs.com.hk/funds/covered-call-etf/",
+   "strateji": "Hang Seng endeksi hisseleri + endeks üzerine opsiyon satarak prim geliri",
+   "not": "DİKKAT: dağıttığı para opsiyon primi; dağıtımların neredeyse tamamı 'sermayeden'. Aylık tutar 0,12 HKD'den 0,19'a çıktı (Ağustos-Ekim 2026). Hang Seng endeksi çoğunlukla Çin şirketi ama HSBC, AIA gibi Hong Kong şirketleri de var. Şubat 2024'te kuruldu; 2017-2023 gri."
+  },
+  {
+   "code": "3437",
+   "exchange": "HKEX",
+   "name": "Bosera China Reform Hong Kong Central-SOEs High Dividend Yield Index ETF",
+   "issuer": "Bosera",
+   "aum_mn_usd": 116.9,
+   "aum_date": "2026-11-11",
+   "inception": "2024-07-09",
+   "years": {
+    "2017": null,
+    "2018": null,
+    "2019": null,
+    "2020": null,
+    "2021": null,
+    "2022": null,
+    "2023": null,
+    "2024": 1,
+    "2025": 1,
+    "2026": 1
+   },
+   "frequency": "semiannual",
+   "ttm_dps": 0.7,
+   "dps_currency": "HKD",
+   "yield": 0.0721,
+   "expense_ratio": 0.0076,
+   "board_lot": 100,
+   "source_url": "https://www.hkex.com.hk/Market-Data/Securities-Prices/Exchange-Traded-Products/Exchange-Traded-Products-Quote?sym=3437&sc_lang=en",
+   "strateji": "Hong Kong'da işlem gören yaklaşık 50 Çin merkezi kamu şirketi, yüksek temettü verimli",
+   "not": "Kuruluştan beri her Mart/Nisan ve Eylül'de sabit 0,35 HKD (toplam 5 ödeme). Sermayeden dağıtıma izin var, oranı doğrulanamadı. Gider oranı HKEX verisi; güncel fon belgesinden teyit edilmedi. Temmuz 2024'te kuruldu; 2017-2023 gri."
+  },
+  {
+   "code": "3190",
+   "exchange": "HKEX",
+   "name": "Fubon Shanghai-Shenzhen-Hong Kong High Dividend Yield ETF",
+   "issuer": "Fubon",
+   "aum_mn_usd": 112.5,
+   "aum_date": "2026-11-11",
+   "inception": "2022-07-06",
+   "years": {
+    "2017": null,
+    "2018": null,
+    "2019": null,
+    "2020": null,
+    "2021": null,
+    "2022": 1,
+    "2023": 1,
+    "2024": 1,
+    "2025": 1,
+    "2026": 1
+   },
+   "frequency": "quarterly",
+   "ttm_dps": 1.15,
+   "dps_currency": "HKD",
+   "yield": 0.0663,
+   "expense_ratio": 0.0088,
+   "board_lot": 200,
+   "source_url": "https://www.fubonfund.com.hk/eng/retail-funds-details?pkey=123",
+   "strateji": "Şanghay, Shenzhen ve Hong Kong'dan 30 yüksek temettülü hisse (Çin içi A hisseleri dahil)",
+   "not": "Listede Çin içi (A) hisselerine yatırım yapan tek fon; yaklaşık %14 Hong Kong gayrimenkul/banka. 3 ayda bir, düzensiz (0,15 / 0,20 / 0,45 / 0,35 HKD). Sermayeden dağıtıma izin var, oranı açıklanmıyor. İşlem hacmi düşük. Gider oranı HKEX verisi, teyit edilmedi. Temmuz 2022'de kuruldu; 2017-2021 gri."
+  },
+  {
+   "code": "KLIP",
+   "exchange": "NYSE Arca",
+   "name": "KraneShares KWEB Covered Call Strategy ETF",
+   "issuer": "KraneShares",
+   "aum_mn_usd": 83.4,
+   "aum_date": "2026-11-10",
+   "inception": "2023-01-11",
+   "years": {
+    "2017": null,
+    "2018": null,
+    "2019": null,
+    "2020": null,
+    "2021": null,
+    "2022": null,
+    "2023": 1,
+    "2024": 1,
+    "2025": 1,
+    "2026": 1
+   },
+   "frequency": "monthly",
+   "ttm_dps": 6.3167,
+   "dps_currency": "USD",
+   "yield": 0.2949,
+   "expense_ratio": 0.0094,
+   "board_lot": null,
+   "source_url": "https://kraneshares.com/klip/",
+   "strateji": "Çin internet şirketleri fonu (KWEB) + üzerine opsiyon satarak prim geliri",
+   "not": "DİKKAT: gelir opsiyon primi, temettü değil; dağıtımlar sermaye iadesi içerir. Ocak 2025'te 3'e 1 ters bölünme yapıldı ve aylık ödeme fon değerinin %2'siyle sınırlandı; aylık ödeme 0,63 $'dan (Kasım 2025) 0,42 $'a (Ekim 2026) düştü. Küçük fon. Koşula uyan tek ABD fonu. Ocak 2023'te kuruldu; 2017-2022 gri."
+  }
+ ],
+ "excluded": [
+  {
+   "name": "Hang Seng High Dividend 30 Index ETF",
+   "code": "3466",
+   "aum_mn_usd": 1823.3,
+   "reason": "Too new: listed 2025-04-07, first distribution May 2025 (none in 2024). Monthly payer, HKD 0.11-0.13/month, trailing yield about 7.7%, ongoing charges 0.70%. Largest pure China/HK high-dividend ETF on HKEX today."
+  },
+  {
+   "name": "CSOP HSCEI Covered Call Active ETF",
+   "code": "2802",
+   "aum_mn_usd": 1090.4,
+   "reason": "Too new: listed 2025-12-11, first distribution Jan 2026. Monthly covered-call payer (HKD 0.14-0.15)."
+  },
+  {
+   "name": "Global X Hang Seng TECH Covered Call Active ETF",
+   "code": "3417",
+   "aum_mn_usd": 455.0,
+   "reason": "Too new: listed 2025-03-13, first distribution Apr 2025. Monthly covered call on Hang Seng TECH."
+  },
+  {
+   "name": "CSOP Hang Seng Stock Connect High Dividend ETF",
+   "code": "3469",
+   "aum_mn_usd": 70.7,
+   "reason": "Too new: listed 2025-09-30; no cash distribution found on etnet/stockanalysis yet."
+  },
+  {
+   "name": "Fullgoal Hang Seng HK High Dividend ETF",
+   "code": "3031",
+   "aum_mn_usd": 58.6,
+   "reason": "Too new: listed 2026-03-31, monthly distributions since Jul 2026."
+  },
+  {
+   "name": "ChinaAMC FTSE Hong Kong High Dividend ETF (distributing 3590 / accumulating 3592)",
+   "code": "3590",
+   "aum_mn_usd": 47.6,
+   "reason": "Too new: listed 2026-09-30; first distribution of 3590 goes ex on 2026-11-23."
+  },
+  {
+   "name": "Global X Hang Seng High Dividend Yield Enhanced Income ETF",
+   "code": "3555",
+   "aum_mn_usd": 35.1,
+   "reason": "Too new: listed 2026-08-20, two monthly distributions so far."
+  },
+  {
+   "name": "Hang Seng HSCEI Covered Call Active ETF",
+   "code": "3519",
+   "aum_mn_usd": 14.0,
+   "reason": "Too new: listed 2026-05-08."
+  },
+  {
+   "name": "Hang Seng TECH Covered Call Active ETF",
+   "code": "3589",
+   "aum_mn_usd": 10.7,
+   "reason": "Too new: listed 2026-05-08."
+  },
+  {
+   "name": "Simplify China A Shares PLUS Income ETF",
+   "code": "CAS",
+   "aum_mn_usd": 10.5,
+   "reason": "Too new (launched 2025-01-13, no 2024 distribution) and very small; US-listed (NYSE Arca), swap/option based income overlay on China A-shares."
+  },
+  {
+   "name": "ChinaAMC Asia High Dividend ETF",
+   "code": "3145",
+   "aum_mn_usd": 221.9,
+   "reason": "Does not fit: Asia-Pacific index (Bloomberg APAC High Dividend 40), not a China fund. Monthly payer, trailing yield about 8.6%."
+  },
+  {
+   "name": "Value Partners HK-US Dividend Low Volatility ETF",
+   "code": "3488",
+   "aum_mn_usd": 201.3,
+   "reason": "Does not fit: mixed Hong Kong + US index; also too new (listed 2026-03-31)."
+  },
+  {
+   "name": "CSOP FTSE Asia Tech and Dividend Index ETF",
+   "code": "3473",
+   "aum_mn_usd": 76.2,
+   "reason": "Does not fit: pan-Asia tech + dividend index; too new (2026-03-30)."
+  },
+  {
+   "name": "E Fund (HK) MSCI Asia Pacific Select High Dividend Index ETF",
+   "code": "3483",
+   "aum_mn_usd": 69.1,
+   "reason": "Does not fit: Asia-Pacific index; too new (2025-09-26)."
+  },
+  {
+   "name": "Global X Asia Pacific High Dividend Yield ETF",
+   "code": "3116",
+   "aum_mn_usd": 8.0,
+   "reason": "Does not fit: Asia-Pacific index."
+  },
+  {
+   "name": "Huatai-PineBridge Dividend Low Volatility ETF (mainland)",
+   "code": "512890",
+   "aum_mn_usd": 4557.0,
+   "reason": "Mainland-listed (Shanghai), not buyable by foreign retail investors. RMB 30.40bn on 2026-09-28 (China Fund News), largest mainland dividend ETF. Code from general knowledge, not stated in the article."
+  },
+  {
+   "name": "China Southern S&P China A-share LargeCap Dividend Low Volatility 50 ETF (mainland)",
+   "code": "515450",
+   "aum_mn_usd": 3054.0,
+   "reason": "Mainland-listed. RMB 20.38bn on 2026-09-28. Code from general knowledge."
+  },
+  {
+   "name": "Huatai-PineBridge SSE Dividend ETF (mainland)",
+   "code": "510880",
+   "aum_mn_usd": 2830.0,
+   "reason": "Mainland-listed. RMB 18.88bn on 2026-09-28."
+  },
+  {
+   "name": "E Fund CSI Dividend ETF (mainland)",
+   "code": "515180",
+   "aum_mn_usd": 2693.0,
+   "reason": "Mainland-listed. RMB 17.97bn on 2026-09-28. Code from general knowledge."
+  },
+  {
+   "name": "E Fund CSI Dividend Low Volatility ETF (mainland)",
+   "code": "563020",
+   "aum_mn_usd": 1824.0,
+   "reason": "Mainland-listed. RMB 12.17bn on 2026-09-28. Code from general knowledge. All 82 mainland dividend-theme ETFs together: about RMB 196.8bn."
+  },
+  {
+   "name": "European UCITS China dividend ETFs",
+   "code": null,
+   "aum_mn_usd": null,
+   "reason": "None found: one search of justETF-type listings turned up no UCITS ETF on a China/Hang Seng high-dividend index (not an exhaustive check)."
+  },
+  {
+   "name": "Single-stock option-income ETFs (YieldMax BABA BABO, Roundhill BABW, GraniteShares BBYY)",
+   "code": "BABO",
+   "aum_mn_usd": 12.5,
+   "reason": "Does not fit: synthetic option income on one stock (Alibaba), not a fund of Chinese companies. Size shown is BABO only."
+  },
+  {
+   "name": "Candidate codes that are not China dividend funds",
+   "code": "2824 / 3037 / 3404 / 3046 / 3443 / 3180",
+   "aum_mn_usd": null,
+   "reason": "Checked against the HKEX securities list of 2026-11-12: 2824 = E Fund gold miners ETF, 3037 = CSOP Hang Seng Index ETF (broad), 3404 = ChinaAMC MSCI India ETF, 3046 = ChinaAMC Ether ETF, 3443 = CSOP FTSE Hong Kong Equity ETF (broad), 3180 = not listed."
+  }
+ ],
+ "sources": [
+  "https://www.hkex.com.hk/eng/services/trading/securities/securitieslists/ListOfSecurities.xlsx (HKEX list of securities, updated 2026-11-12: codes, board lots, counters)",
+  "https://www.hkex.com.hk/Market-Data/Securities-Prices/Exchange-Traded-Products/Exchange-Traded-Products-Quote?sym=3070&sc_lang=en (HKEX ETP quote data: AUM, units, ongoing charges, yield, dates; same page per code)",
+  "https://ifp.hkex.com.hk/fund-repository/ (HKEX Integrated Fund Platform: fund AUM in USD at 2026-09-30, used as cross-check)",
+  "https://www.etnet.com.hk/www/eng/stocks/realtime/quote_dividend.php?code=3110 (etnet dividend records, full history per code)",
+  "https://stockanalysis.com/quote/hkg/3110/ and /dividend/ (price, TTM distribution, yield; same pattern per code; US funds at https://stockanalysis.com/etf/klip/)",
+  "https://www.globalxetfs.com.hk/funds/hscei-covered-call-etf/",
+  "https://www.globalxetfs.com.hk/funds/covered-call-etf/",
+  "https://www.globalxetfs.com.hk/funds/hang-seng-high-dividend-yield-etf/",
+  "https://www.globalxetfs.com.hk/funds/hang-seng-tech-covered-call-active-etf/",
+  "https://asset.pingan.com.hk/en/PACT-PACCHKD (factsheet 2026-09-30, KFS Apr 2026, dividend announcements)",
+  "https://hkamcnav.pingan.com.cn/etfasset/Overview/eng/3070 (Ping An distribution history since 2012)",
+  "https://www.fubonfund.com.hk/eng/retail-funds-details?pkey=123",
+  "https://www1.hkexnews.hk/listedco/listconews/sehk/2024/0704/2024070400107.pdf (Bosera 3437 KFS at launch)",
+  "https://www1.hkexnews.hk/listedco/listconews/sehk/2024/0924/2024092401049.pdf (Bosera 3437 first dividend notice)",
+  "https://kraneshares.com/klip/",
+  "https://kraneshares.com/kraneshares-announces-reverse-split-and-distribution-policy-change-for-china-internet-and-covered-call-strategy-etf-klip/",
+  "https://stockanalysis.com/etf/ (full US ETF list scanned for China dividend / income funds)",
+  "https://www.chnfund.com/article/AR09daca7b-a504-4a29-b081-3a23ffd7d2e0 (China Fund News 2026-09-30: mainland dividend ETF sizes)",
+  "https://www.x-rates.com/calculator/?from=USD&to=HKD&amount=1 (7.846056 HKD and 6.671654 CNY per USD, 2026-11-11 14:45 UTC)"
+ ]
+}

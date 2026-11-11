@@ -62,9 +62,10 @@ python3 olustur.py --test x.xlsx   # GOOGLEFINANCE yerine sabit sayılar (formü
 | Sekme | Ne işe yarar |
 |---|---|
 | **Çin İlk 20** | Hong Kong / ABD'de işlem gören (Türkiye'den alınabilen) en büyük 20 Çin şirketi: aynı ✓/✗ ve sayı mantığı, Hong Kong kodu, ABD (ADR) kodu, lot büyüklüğü, verim, kredi notu, stopaj notu |
+| **Çin Temettü Fonları** | Hong Kong / ABD'de işlem gören, son 3 yılda her yıl dağıtım yapmış 7 Çin temettü fonu: aynı ✓/✗ ve sayı mantığı, büyüklük, verim, gider oranı, lot |
 | **Batmama Riski (3 yıl)** | 20 Çin şirketi için aynı gösterge |
 | **Not Tablosu** | Kredi notu kategorileri |
 
 İki dosyayı yeniden üretmek için: `python3 temettu_raporu_guncelle.py`
-(girdi: `kaynak/temettu_raporu_orijinal.xlsx` + `temettu_fonlari.json` + `temettu_cin.json`).
+(girdi: `kaynak/temettu_raporu_orijinal.xlsx` + `temettu_fonlari.json` + `temettu_cin.json` + `temettu_cin_fonlari.json`).
 Fon ve Çin verisi 11.11.2026 tarihlidir (stockanalysis.com, companiesmarketcap.com, Yahoo Finance, HKEX). Bilgi amaçlıdır, yatırım tavsiyesi değildir.

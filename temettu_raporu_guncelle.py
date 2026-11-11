@@ -419,7 +419,7 @@ def fon_sayfasi(wb, veri):
     return len(fonlar)
 
 
-def fon_alt_kisim(ws, sablon, son, notlar, genislikler):
+def fon_alt_kisim(ws, sablon, son, notlar, genislikler, not_yuksekligi=90):
     """Fon sayfalarının ortak kısmı: renkler, alt toplam, açıklamalar, sütun genişlikleri."""
     stil = stil_kopyala
     ws.conditional_formatting.add(
@@ -446,7 +446,7 @@ def fon_alt_kisim(ws, sablon, son, notlar, genislikler):
         ws[f"A{satir}"] = metin
         stil(ws[f"A{satir}"], sablon["A29"])
         ws.merge_cells(f"A{satir}:T{satir}")
-        ws.row_dimensions[satir].height = 90
+        ws.row_dimensions[satir].height = not_yuksekligi
         satir += 1
 
     for col, w in genislikler.items():
@@ -479,7 +479,8 @@ def cin_fon_sayfasi(wb, veri):
     son = 4 + len(fonlar)
     stil = stil_kopyala
 
-    ws["A1"] = f"Çin — temettü dağıtan en büyük {len(fonlar)} borsa yatırım fonu (Hong Kong / ABD'de işlem görenler)"
+    ws["A1"] = (f"Çin — son 3 yılda her yıl temettü dağıtan {len(fonlar)} borsa yatırım fonu "
+                "(Hong Kong / ABD'de işlem görenler)")
     stil(ws["A1"], sablon["A1"])
     ws["A2"] = (f"Veri tarihi: {veri['as_of']}. Fon = içinde onlarca hisse olan sepet; tek şirkete göre "
                 "riski dağıtır. Seçim kriteri ve elenen fonlar tablonun altında.")
@@ -536,7 +537,7 @@ def cin_fon_sayfasi(wb, veri):
         ws.row_dimensions[r].height = 40
 
     fon_alt_kisim(ws, sablon, son, [veri.get("selection_note"), veri.get("broad_note")],
-                  CIN_FON_GENISLIK)
+                  CIN_FON_GENISLIK, not_yuksekligi=120)
     return len(fonlar)
 
 
